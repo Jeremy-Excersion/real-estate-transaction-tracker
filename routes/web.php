@@ -24,10 +24,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('role:admin')->group(function () {
-    Route::get('/admin', function () {
+Route::middleware('role:admin')->prefix('admin')->group(function () {
+    Route::get('/', function () {
         return Inertia::render('Admin/Index');
     })->name('admin');
+
+    Route::get('/users', function () {
+        return Inertia::render('Admin/Users/Index');
+    })->name('admin.users');
 });
 
 require __DIR__.'/auth.php';
