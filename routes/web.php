@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
+use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -30,7 +31,8 @@ Route::middleware('role:admin')->prefix('admin')->group(function () {
     })->name('admin');
 
     Route::get('/users', function () {
-        return Inertia::render('Admin/Users/Index');
+        $users = User::with('roles')->get();
+        return Inertia::render('Admin/Users/Index', ['users' => $users]);
     })->name('admin.users');
 });
 
