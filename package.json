@@ -1,4 +1,7 @@
 {
+    "name": "real-estate-transaction-tracker",
+    "description": "A real estate transaction tracker built with Laravel and Vue 3.",
+    "version": "1.0.0",
     "private": true,
     "type": "module",
     "scripts": {
