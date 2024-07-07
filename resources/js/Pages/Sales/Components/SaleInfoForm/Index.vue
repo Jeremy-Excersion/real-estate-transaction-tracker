@@ -8,12 +8,7 @@
       <div>
         <h2 class="text-2xl font-bold mb-2">Agent Info</h2>
         <label for="user_id">Agent</label>
-        <select
-          id="user_id"
-          name="user_id"
-          :class="styleClasses.input"
-          v-model="form.user_id"
-        >
+        <select id="user_id" name="user_id" :class="styleClasses.input" v-model="form.user_id">
           <option v-for="user in users" :key="user.email" :value="user.id">
             {{ user.name }}
           </option>
@@ -73,7 +68,7 @@
             />
           </div>
           <div>
-            <label for="state"> State </label>
+            <label for="state">State</label>
             <select id="state" name="state" v-model="form.state">
               <option
                 v-for="state in stateOptions"
@@ -143,7 +138,7 @@
             />
           </div>
           <div class="mb-4">
-            <label for="agent_split_percentage"> Agent Split Percentage </label>
+            <label for="agent_split_percentage">Agent Split Percentage</label>
             <input
               type="text"
               name="agent_split_percentage"
@@ -172,30 +167,16 @@
             />
           </div>
           <div class="mb-4">
-            <label for="status"> Status </label>
-            <select
-              id="status"
-              name="status"
-              :class="styleClasses.input"
-              v-model="form.status"
-            >
-              <option
-                v-for="status in statusOptions"
-                :key="status"
-                :value="status"
-              >
+            <label for="status">Status</label>
+            <select id="status" name="status" :class="styleClasses.input" v-model="form.status">
+              <option v-for="status in statusOptions" :key="status" :value="status">
                 {{ status }}
               </option>
             </select>
           </div>
           <div class="mb-4">
-            <label for="buyer"> Type </label>
-            <select
-              id="buyer"
-              name="buyer"
-              :class="styleClasses.input"
-              v-model="form.buyer"
-            >
+            <label for="buyer">Type</label>
+            <select id="buyer" name="buyer" :class="styleClasses.input" v-model="form.buyer">
               <option
                 v-for="buyerType in buyerOptions"
                 :key="buyerType.label"
@@ -223,19 +204,16 @@
               />
             </div>
             <div>
-              <label for="other_source"> Other </label>
+              <label for="other_source">Other</label>
               <input
                 name="other_source"
                 type="checkbox"
-                @change="
-                  state.customSourceFieldVisible =
-                    !state.customSourceFieldVisible
-                "
+                @change="state.customSourceFieldVisible = !state.customSourceFieldVisible"
               />
             </div>
           </div>
           <div v-if="state.customSourceFieldVisible">
-            <label for="custom_source"> Custom Source </label>
+            <label for="custom_source">Custom Source</label>
             <input
               type="text"
               name="custom_source"
@@ -269,36 +247,24 @@
       </div>
     </div>
     <!-- SUBMIT BUTTON -->
-    <button
-      type="submit"
-      class="text-white p-2.5 my-4 bg-[#ba7b65] uppercase block rounded-lg"
-    >
+    <button type="submit" class="text-white p-2.5 my-4 bg-[#ba7b65] uppercase block rounded-lg">
       Save
     </button>
   </form>
 </template>
 
 <script>
-import { useForm } from "@inertiajs/vue3";
-import Fees from "./Fees.vue";
-import Checks from "./Checks.vue";
-import { reactive, watch } from "vue";
-import ReturnToDashboardButton from "@/Pages/Sales/Components/SaleInfoForm/ReturnToDashboardButton.vue";
-import {
-  stateOptions,
-  statusOptions,
-  buyerOptions,
-  splitTypes,
-} from "../../index.data";
-import {
-  validateEmail,
-  validatePrice,
-  validateZipcode,
-} from "@/Utils/Validators";
-import { toast } from "vue3-toastify";
+import { useForm } from '@inertiajs/vue3';
+import Fees from './Fees.vue';
+import Checks from './Checks.vue';
+import { reactive, watch } from 'vue';
+import ReturnToDashboardButton from '@/Pages/Sales/Components/SaleInfoForm/ReturnToDashboardButton.vue';
+import { stateOptions, statusOptions, buyerOptions, splitTypes } from '../../index.data';
+import { validateEmail, validatePrice, validateZipcode } from '@/Utils/Validators';
+import { toast } from 'vue3-toastify';
 
 export default {
-  name: "SaleInfoForm",
+  name: 'SaleInfoForm',
   components: {
     Fees,
     Checks,
@@ -317,48 +283,48 @@ export default {
       newCheck: {},
       agentCommission: 0,
       customSourceFieldVisible: false,
-      customSource: "",
+      customSource: '',
       formError: {
-        zip: "",
-        email: "",
-        askingPrice: "",
-        closingPrice: "",
+        zip: '',
+        email: '',
+        askingPrice: '',
+        closingPrice: '',
       },
     });
 
     const form = useForm({
-      user_id: "",
-      client_name: "",
-      client_email: "",
-      address: "",
-      city: "",
-      state: "",
-      zip: "",
-      asking_price: "",
-      sold_price: "",
-      percentage: "",
-      agent_split_percentage: "",
-      pending_date: "",
-      closing_date: "",
-      status: "Pending",
+      user_id: '',
+      client_name: '',
+      client_email: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      asking_price: '',
+      sold_price: '',
+      percentage: '',
+      agent_split_percentage: '',
+      pending_date: '',
+      closing_date: '',
+      status: 'Pending',
       sources: [],
       fees: [],
       checks: [],
       buyer: null,
-      notes: "",
+      notes: '',
     });
 
     const styleClasses = {
-      input: "rounded-lg block bg-[#f8f8f8]",
+      input: 'rounded-lg block bg-[#f8f8f8]',
     };
 
     const handleDateChange = () => {
-      const pendingDate = new Date(form["pending_date"]);
-      const closingDate = new Date(form["closing_date"]);
+      const pendingDate = new Date(form['pending_date']);
+      const closingDate = new Date(form['closing_date']);
       if (closingDate < pendingDate) {
-        toast("Closing date cannot be before pending date", {
+        toast('Closing date cannot be before pending date', {
           autoClose: 1000,
-          position: "top-center",
+          position: 'top-center',
           hideProgressBar: true,
         });
         return;
@@ -367,30 +333,30 @@ export default {
 
     const validateInput = (field) => {
       switch (field) {
-        case "email":
+        case 'email':
           if (!validateEmail(form.client_email)) {
-            state.formError[field] = "Please enter a valid email";
+            state.formError[field] = 'Please enter a valid email';
           }
           break;
-        case "zip":
+        case 'zip':
           if (!validateZipcode(form.zip)) {
-            state.formError[field] = "Please enter a valid zip code";
+            state.formError[field] = 'Please enter a valid zip code';
           }
           break;
-        case "askingPrice":
+        case 'askingPrice':
           if (!validatePrice(form.asking_price)) {
-            state.formError[field] = "Please enter a valid asking price";
+            state.formError[field] = 'Please enter a valid asking price';
           } else {
             // strip out commas and $ sign
-            form.asking_price = form.asking_price.replace(/[$,]/g, "");
+            form.asking_price = form.asking_price.replace(/[$,]/g, '');
           }
           break;
-        case "soldPrice":
+        case 'soldPrice':
           if (!validatePrice(form.sold_price)) {
-            state.formError[field] = "Please enter a valid sold price";
+            state.formError[field] = 'Please enter a valid sold price';
           } else {
             // strip out commas and $ sign
-            form.sold_price = form.sold_price.replace(/[$,]/g, "");
+            form.sold_price = form.sold_price.replace(/[$,]/g, '');
           }
           break;
         default:
@@ -399,9 +365,7 @@ export default {
     };
 
     const handleSourceChange = (source) => {
-      const sourceIndex = form.sources.findIndex(
-        (obj) => obj.name === source.name
-      );
+      const sourceIndex = form.sources.findIndex((obj) => obj.name === source.name);
       if (sourceIndex === -1) {
         form.sources.push({
           name: state.customSource || source.name,

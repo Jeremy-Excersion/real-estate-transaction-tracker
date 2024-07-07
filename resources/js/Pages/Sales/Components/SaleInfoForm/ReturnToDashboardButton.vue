@@ -4,9 +4,9 @@
   </button>
 </template>
 <script setup>
-import { ArrowUturnLeftIcon } from "@heroicons/vue/20/solid";
+import { ArrowUturnLeftIcon } from '@heroicons/vue/20/solid';
 
 const handleGoBack = () => {
-  window.location.href = "/sales";
+  window.location.href = '/sales';
 };
 </script>

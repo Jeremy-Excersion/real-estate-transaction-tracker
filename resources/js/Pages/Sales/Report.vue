@@ -9,15 +9,30 @@
       </div>
 
       <div class="agent-info mb-6">
-        <p><strong>Agent Name:</strong> {{ sale.user.name }}</p>
-        <p><strong>Client Name:</strong> {{ sale.client_name }}</p>
         <p>
-          <strong>Address:</strong> {{ sale.address }}, {{ sale.city }},
-          {{ sale.state }} {{ sale.zip }}
+          <strong>Agent Name:</strong>
+          {{ sale.user.name }}
         </p>
-        <p><strong>Sold Price:</strong> ${{ sale.sold_price }}</p>
-        <p><strong>Asking Price:</strong> ${{ sale.asking_price }}</p>
-        <p><strong>Percentage:</strong> {{ sale.percentage }}%</p>
+        <p>
+          <strong>Client Name:</strong>
+          {{ sale.client_name }}
+        </p>
+        <p>
+          <strong>Address:</strong>
+          {{ sale.address }}, {{ sale.city }}, {{ sale.state }} {{ sale.zip }}
+        </p>
+        <p>
+          <strong>Sold Price:</strong>
+          ${{ sale.sold_price }}
+        </p>
+        <p>
+          <strong>Asking Price:</strong>
+          ${{ sale.asking_price }}
+        </p>
+        <p>
+          <strong>Percentage:</strong>
+          {{ sale.percentage }}%
+        </p>
         <p>
           <strong>Agent Split Percentage:</strong>
           {{ sale.agent_split_percentage }}%
@@ -30,13 +45,14 @@
           <strong>Closing Date:</strong>
           {{ new Date(sale.closing_date).toLocaleDateString() }}
         </p>
-        <p><strong>Status:</strong> {{ sale.status }}</p>
+        <p>
+          <strong>Status:</strong>
+          {{ sale.status }}
+        </p>
       </div>
 
       <div class="fees-info mb-6">
-        <h2 class="text-xl font-semibold mb-2">
-          Commission Calculation Breakdown
-        </h2>
+        <h2 class="text-xl font-semibold mb-2">Commission Calculation Breakdown</h2>
         <table class="w-full border-collapse">
           <thead>
             <tr>
@@ -56,13 +72,9 @@
             <tr v-for="(step, index) in breakdown" :key="index">
               <td class="border-b py-2">{{ step.description }}</td>
               <td class="border-b py-2 text-right">
-                {{ step.amount > 0 ? "+" : "-" }}${{
-                  Math.abs(step.amount).toFixed(2)
-                }}
+                {{ step.amount > 0 ? '+' : '-' }}${{ Math.abs(step.amount).toFixed(2) }}
               </td>
-              <td class="border-b py-2 text-right">
-                ${{ step.commissionState }}
-              </td>
+              <td class="border-b py-2 text-right">${{ step.commissionState }}</td>
             </tr>
             <tr>
               <td class="border-b py-2 font-bold">Total Commission</td>
@@ -88,9 +100,9 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from "vue";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { PrinterIcon } from "@heroicons/vue/20/solid";
+import { ref, watchEffect } from 'vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { PrinterIcon } from '@heroicons/vue/20/solid';
 
 const props = defineProps({
   sale: Object,
@@ -241,8 +253,7 @@ const calculateCommissionStates = () => {
 
   // Calculate agent split
   let agentCommission =
-    -(totalCommission * parseFloat(100 - props.sale.agent_split_percentage)) /
-    100;
+    -(totalCommission * parseFloat(100 - props.sale.agent_split_percentage)) / 100;
   totalCommission += agentCommission;
   breakdown.value.push({
     description: `Agent Split (${props.sale.agent_split_percentage}%)`,

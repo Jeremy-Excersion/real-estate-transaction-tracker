@@ -2,14 +2,8 @@
   <section class="w-[100%]">
     <div class="flex justify-start">
       <h2 class="text-2xl font-bold my-4">Fees</h2>
-      <button
-        type="button"
-        @click="state.isAddingNewFee = !state.isAddingNewFee"
-      >
-        <PlusIcon
-          class="text-black h-[25px] w-[25px] ml-4"
-          aria-label="Add new fee"
-        />
+      <button type="button" @click="state.isAddingNewFee = !state.isAddingNewFee">
+        <PlusIcon class="text-black h-[25px] w-[25px] ml-4" aria-label="Add new fee" />
       </button>
     </div>
     <table class="min-w-full divide-y divide-gray-200 text-left">
@@ -81,14 +75,8 @@
               </select>
             </td>
             <!-- ACTION BUTTONS -->
-            <td
-              class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium"
-            >
-              <button
-                type="button"
-                v-if="fee.isEditing"
-                @click="handleEdit(fee, index)"
-              >
+            <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+              <button type="button" v-if="fee.isEditing" @click="handleEdit(fee, index)">
                 <CheckCircleIcon class="text-black h-[25px] w-[25px] ml-4" />
               </button>
               <button
@@ -113,7 +101,7 @@
         <tr v-if="state.isAddingNewFee">
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm text-gray-900">
-              <label for="fee_amount" class="block"> Fee Amount </label>
+              <label for="fee_amount" class="block">Fee Amount</label>
               <input
                 type="text"
                 name="fee_amount"
@@ -125,7 +113,7 @@
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm text-gray-900">
-              <label for="fee_name" class="block"> Fee Name </label>
+              <label for="fee_name" class="block">Fee Name</label>
               <input
                 type="text"
                 name="fee_name"
@@ -137,7 +125,7 @@
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm text-gray-900">
-              <label for="split_type" class="block"> Split Type </label>
+              <label for="split_type" class="block">Split Type</label>
               <select
                 id="split_type"
                 name="split_type"
@@ -168,19 +156,14 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import {
-  PlusIcon,
-  PencilSquareIcon,
-  TrashIcon,
-  CheckCircleIcon,
-} from "@heroicons/vue/20/solid";
-import { splitTypes } from "../../index.data";
-import { formatPrice } from "@/Utils/FormatPrice";
-import { validatePrice } from "@/Utils/Validators";
+import { reactive } from 'vue';
+import { PlusIcon, PencilSquareIcon, TrashIcon, CheckCircleIcon } from '@heroicons/vue/20/solid';
+import { splitTypes } from '../../index.data';
+import { formatPrice } from '@/Utils/FormatPrice';
+import { validatePrice } from '@/Utils/Validators';
 
 export default {
-  name: "Fees",
+  name: 'Fees',
   components: {
     PlusIcon,
     PencilSquareIcon,
@@ -191,30 +174,30 @@ export default {
     fees: Array,
     handleDelete: Function,
   },
-  emits: ["handleUpdate"],
+  emits: ['handleUpdate'],
   setup(props, { emit }) {
     const state = reactive({
       newFee: {},
       isAddingNewFee: false,
       formError: {
-        amount: "",
-        name: "",
-        splitType: "",
+        amount: '',
+        name: '',
+        splitType: '',
       },
     });
 
-    const fields = ["Fee Amount", "Fee Name", "Split Type", "Actions"];
+    const fields = ['Fee Amount', 'Fee Name', 'Split Type', 'Actions'];
 
     const toggleEditing = (index) => {
       props.fees[index].isEditing = !props.fees[index].isEditing;
     };
 
     const handleEdit = (fee, index) => {
-      const requiredFields = ["fee_amount", "fee_name", "split_type"];
+      const requiredFields = ['fee_amount', 'fee_name', 'split_type'];
       const missingField = requiredFields.find((field) => !fee[field]);
 
       if (missingField) {
-        const fieldName = missingField.replace("_", " ");
+        const fieldName = missingField.replace('_', ' ');
         const formattedFieldName =
           fieldName.charAt(0).toUpperCase() + fieldName.substr(1).toLowerCase();
 
@@ -228,12 +211,12 @@ export default {
       };
       props.fees[index].isEditing = !props.fees[index].isEditing;
 
-      emit("handleUpdate", props.fees);
+      emit('handleUpdate', props.fees);
     };
 
     const handleDelete = (index) => {
       props.fees.splice(index, 1);
-      emit("handleUpdate", props.fees);
+      emit('handleUpdate', props.fees);
     };
 
     const handleAddNewFee = () => {
@@ -248,17 +231,17 @@ export default {
       state.newFee = {};
       state.isAddingNewFee = false;
 
-      emit("handleUpdate", props.fees);
+      emit('handleUpdate', props.fees);
     };
 
     const validateInput = (field, fee) => {
       switch (field) {
-        case "amount": {
+        case 'amount': {
           if (!validatePrice(fee.fee_amount)) {
-            state.formError[field] = "Please enter a valid amount";
+            state.formError[field] = 'Please enter a valid amount';
           } else {
             // strip out commas and $ sign
-            fee = fee.replace(/[$,]/g, "");
+            fee = fee.replace(/[$,]/g, '');
           }
         }
       }
