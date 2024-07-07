@@ -2,14 +2,8 @@
   <section class="w-[100%]">
     <div class="flex justify-start">
       <h2 class="text-2xl font-bold my-4">Checks</h2>
-      <button
-        type="button"
-        @click="state.isAddingNewCheck = !state.isAddingNewCheck"
-      >
-        <PlusIcon
-          class="text-black h-[25px] w-[25px] ml-4"
-          aria-label="Add a new check"
-        />
+      <button type="button" @click="state.isAddingNewCheck = !state.isAddingNewCheck">
+        <PlusIcon class="text-black h-[25px] w-[25px] ml-4" aria-label="Add a new check" />
       </button>
     </div>
     <table class="min-w-full divide-y divide-gray-200 text-left">
@@ -35,44 +29,23 @@
               <div v-if="!check.isEditing" class="text-sm text-gray-900">
                 {{ check.number }}
               </div>
-              <input
-                v-else
-                type="text"
-                v-model="check.number"
-                class="rounded-lg"
-              />
+              <input v-else type="text" v-model="check.number" class="rounded-lg" />
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
               <div v-if="!check.isEditing" class="text-sm text-gray-900">
                 ${{ formatPrice(check.amount) }}
               </div>
-              <input
-                v-else
-                type="text"
-                v-model="check.amount"
-                class="rounded-lg"
-              />
+              <input v-else type="text" v-model="check.amount" class="rounded-lg" />
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
               <div v-if="!check.isEditing" class="text-sm text-gray-900">
                 {{ check.date }}
               </div>
-              <input
-                v-else
-                v-model="check.date"
-                class="rounded-lg"
-                type="date"
-              />
+              <input v-else v-model="check.date" class="rounded-lg" type="date" />
             </td>
             <!-- ACTION BUTTONS -->
-            <td
-              class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium"
-            >
-              <button
-                type="button"
-                v-if="check.isEditing"
-                @click="handleEdit(check, index)"
-              >
+            <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+              <button type="button" v-if="check.isEditing" @click="handleEdit(check, index)">
                 <CheckCircleIcon class="text-black h-[25px] w-[25px] ml-4" />
               </button>
               <button
@@ -97,7 +70,7 @@
         <tr v-if="state.isAddingNewCheck">
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm text-gray-900">
-              <label for="check-number" class="block"> Check Number </label>
+              <label for="check-number" class="block">Check Number</label>
               <input
                 type="number"
                 name="check-number"
@@ -109,7 +82,7 @@
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm text-gray-900">
-              <label for="amount" class="block"> Check Amount </label>
+              <label for="amount" class="block">Check Amount</label>
               <input
                 type="number"
                 name="amount"
@@ -121,7 +94,7 @@
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm text-gray-900">
-              <label for="date" class="block"> Check Date </label>
+              <label for="date" class="block">Check Date</label>
               <input
                 id="date"
                 name="date"
@@ -145,18 +118,13 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import {
-  PlusIcon,
-  PencilSquareIcon,
-  TrashIcon,
-  CheckCircleIcon,
-} from "@heroicons/vue/20/solid";
-import { formatPrice } from "@/Utils/FormatPrice";
+import { reactive } from 'vue';
+import { PlusIcon, PencilSquareIcon, TrashIcon, CheckCircleIcon } from '@heroicons/vue/20/solid';
+import { formatPrice } from '@/Utils/FormatPrice';
 
 export default {
-  name: "Checks",
-  emits: ["checks-change"],
+  name: 'Checks',
+  emits: ['checks-change'],
   components: {
     PlusIcon,
     PencilSquareIcon,
@@ -173,7 +141,7 @@ export default {
       isAddingNewCheck: false,
     });
 
-    const fields = ["Check Number", "Check Amount", "Check Date", "Actions"];
+    const fields = ['Check Number', 'Check Amount', 'Check Date', 'Actions'];
 
     const toggleEditing = (index) => {
       props.checks[index].isEditing = !props.checks[index].isEditing;
@@ -184,12 +152,12 @@ export default {
         ...check,
       };
       props.checks[index].isEditing = !props.checks[index].isEditing;
-      emit("checks-change", props.checks);
+      emit('checks-change', props.checks);
     };
 
     const handleDelete = (index) => {
       props.checks.splice(index, 1);
-      emit("checks-change", props.checks);
+      emit('checks-change', props.checks);
     };
 
     const handleAddNewCheck = () => {
@@ -199,7 +167,7 @@ export default {
       props.checks.push(newCheck);
       state.newCheck = {};
       state.isAddingNewCheck = false;
-      emit("checks-change", props.checks);
+      emit('checks-change', props.checks);
     };
 
     return {

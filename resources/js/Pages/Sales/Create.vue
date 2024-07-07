@@ -7,12 +7,12 @@
 </template>
 
 <script>
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import SaleInfoForm from "./Components/SaleInfoForm/Index.vue";
-import { toast } from "vue3-toastify";
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import SaleInfoForm from './Components/SaleInfoForm/Index.vue';
+import { toast } from 'vue3-toastify';
 
 export default {
-  name: "CreateSalePage",
+  name: 'CreateSalePage',
   components: {
     AuthenticatedLayout,
     SaleInfoForm,
@@ -24,11 +24,11 @@ export default {
   setup() {
     const handleSubmit = async (newSale) => {
       try {
-        const { data, status } = await axios.post("/sales/create", newSale);
+        const { data, status } = await axios.post('/sales/create', newSale);
         if (status === 200) {
-          toast("Sale successfully created", {
+          toast('Sale successfully created', {
             autoClose: 1000,
-            position: "top-center",
+            position: 'top-center',
             hideProgressBar: true,
           });
           window.location.href = `/sales/edit/${data.sale.id}`;
@@ -50,7 +50,7 @@ label {
   display: block;
 }
 
-input:not([type="checkbox"]),
+input:not([type='checkbox']),
 select {
   border-radius: 0.5rem;
   background-color: #f8f8f8;
